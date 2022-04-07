@@ -1,0 +1,36 @@
+OSPF IPV6 
+
+Ele tem uma rota padrão IPV6
+
+Não precisa colocar ip nas interfaces, porque eles já tem 
+endereços de link-local que o roteador utiliza para fechar a 
+sessão OSPF, ou seja não precisa de endereço público para rodar 
+o OSPFv3 (OSPF com IPv6).
+
+O OSPFv3 não tem a aba (Networks), porque o OSPFv3 é baseado
+nas interfaces e não nas redes isso porque já tem o endereço
+de link-local em cada uma das interfaces, então não precisa 
+informar a network.
+
+Primeiramente:
+    Adicionar router ID na instancia default (padrão) 
+        Routing --> OSPFv3 --> Instances --> Router ID = IP de loopback usado (IPv4) 
+            Pode usar um IP de loopback específico também
+        Redistribute Default Route = Always (as type 1) --> Ok
+            Para ele poder distribuir a rota default (Padrão) 
+        
+    Adicionar a interface que o OSPFv3 vai acessar:
+        Routing --> OSPFv3 --> Interfaces --> + --> Interface = Interface escolhida
+        Network Type --> point to point --> Ok
+    
+    Adicionar uma interface para loopback
+        IPv6 --> Addresses --> + --> Interface = loopback 
+        Addresses = ip de loopback (IPv6) 
+            Desativar "Advertise" --> Ok
+        Interfaces --> + --> Interface = loopback --> Ok
+            Neighbors --> Botão direito do mouse --> Show Columns --> State 
+                FAZER ISSO NOS OUTROS ROTEADORES TAMBÉM 
+                NÃO COPIAR O IP IGUAL, PROVAVELMENTE UM VAI SER O IP 1 E O OUTRO 2 E ASSIM 
+                POR DIANTE.
+        
+        
